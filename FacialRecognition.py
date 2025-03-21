@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 
 STUDENT_COUNT = 8
-test = cv2.imread("Students/1.jpg")  # Change the path accordingly
+test = cv2.imread("Students/1.jpg", cv2.IMREAD_COLOR)  # Change the path accordingly
 
 
 def get_faces(img):
@@ -20,7 +20,8 @@ def get_faces(img):
             continue
 
         image = face_recognition.load_image_file(image_path)
-        encodings = face_recognition.face_encodings(image)
+        resized_image = cv2.resize(image, (800, 600), interpolation=cv2.INTER_AREA)
+        encodings = face_recognition.face_encodings(resized_image)
 
         if encodings:  # Ensure at least one encoding is found
             student_images.append(image)
@@ -73,5 +74,5 @@ def start_face_recognition(img, encodings, names):
         return name
     return "Unknown"
 
-
-print(get_faces(test))
+img = cv2.resize(test, (800, 600), interpolation=cv2.INTER_AREA)
+print(get_faces(img))
