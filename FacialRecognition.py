@@ -1,12 +1,14 @@
 import face_recognition
 import os
 import cv2
-import numpy as np  # Fix: Import numpy properly
+import numpy as np
 
 STUDENT_COUNT = 8
+test = cv2.imread("Students/1.jpg")  # Change the path accordingly
 
 
 def get_faces(img):
+    name = "Unknown"
     # Load known student images
     student_images = []
     student_encodings = []
@@ -28,7 +30,7 @@ def get_faces(img):
 
     student_names = [str(i) for i in range(1, STUDENT_COUNT + 1)][:len(student_encodings)]
 
-    start_face_recognition(img, student_encodings, student_names)
+    return start_face_recognition(img, student_encodings, student_names)
 
 
 def start_face_recognition(img, encodings, names):
@@ -67,4 +69,9 @@ def start_face_recognition(img, encodings, names):
         # Print detected person's name
         print(f"Detected: {name}")
         print("Uploading name...")
+
         return name
+    return "Unknown"
+
+
+print(get_faces(test))
